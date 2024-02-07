@@ -39,7 +39,7 @@ const model = new OpenAI({
   streaming: true,
   modelName: "gpt-3.5-turbo-0301",
   temperature: 0.9,
-  verbose: true,
+  verbose: false,
 });
 
 const qa = ConversationalRetrievalQAChain.fromLLM(model, retriever, {

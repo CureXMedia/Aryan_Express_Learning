@@ -6,7 +6,7 @@ var outputBox = document.getElementById("outputBox");
 async function handleSubmit(event) {
     event.preventDefault();
     var userInputValue = document.getElementById("userInput").value;
-    fetch(import.meta.env.VITE_BACKEND_URL+ '/pipe',{
+    fetch('/pipe',{
         body: JSON.stringify({question:userInputValue}),
         method: 'POST',
         headers: {

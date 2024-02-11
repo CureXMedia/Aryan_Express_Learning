@@ -13,10 +13,7 @@ app.use(json())
 app.use(morgan('combined'))
 app.use(cors())
 
-// app.get('/', (req, res,next) => {
-//   res.send('Hello World!')
-//   next()
-// })
+
 
 
 

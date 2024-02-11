@@ -7,40 +7,25 @@ import { ConversationSummaryMemory } from "langchain/memory";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { OPENAI_API_KEY,MONGODB_URI } from "./config.js";
 const openAIApiKey = OPENAI_API_KEY;
-const memory = new ConversationSummaryMemory({
-  memoryKey: "chat_history",
-  llm: new OpenAI({
-    openAIApiKey,
-    modelName: "gpt-3.5-turbo-0301",
-    temperature: 0,
-  }),
-});
+// const memory = new ConversationSummaryMemory({
+//   memoryKey: "chat_history",
+//   llm: new OpenAI({
+//     openAIApiKey,
+//     modelName: "gpt-3.5-turbo-0301",
+//     temperature: 0,
+//   }),
+// });
 
 
-const client = new MongoClient(
-  MONGODB_URI||  ""
-);
-const collection = client.db("vectoreStore").collection("shrumti");
 
-const vectorStore = new MongoDBAtlasVectorSearch(
-  new OpenAIEmbeddings({ openAIApiKey }),
-  { collection }
-);
 
-const retriever = vectorStore.asRetriever({
-  searchType: "mmr",
-  searchKwargs: {
-    fetchK: 5,
-    lambda: 0.5,
-  },
-});
 
 const model = new OpenAI({
   openAIApiKey,
   streaming: true,
   modelName: "gpt-3.5-turbo-0301",
   temperature: 0.9,
-  verbose: true ,
+  verbose: false ,
 });
 
 
@@ -59,9 +44,7 @@ not particularly bright. She tends to talk excessively. She holds a strong disli
   {input}    `);
 
 
-const qa = ConversationalRetrievalQAChain.fromLLM(model, retriever, {
-  memory,
-});
+
 
 
 
@@ -76,9 +59,7 @@ const chain = prompt.pipe(model);
 // const res = await chain.invoke({ input: q , result: result});
 
 const pipe = async function (input) {
-  const resultOne = await retriever._getRelevantDocuments(input);
   
-
   let text = await chain.invoke({ input });
   return {text};
 }

@@ -2,6 +2,10 @@ import express , {json} from 'express'
 import { reply , pipe } from './gpt.js'  
 import morgan from 'morgan' 
 import cors from 'cors'
+// import mongoose from 'mongoose';
+import { MONGODB_URI } from "./config.js";
+// const mongodburi = MONGODB_URI;
+// import {userRouter} from './routes/userRoutes.js'
 
 import path from "path"
 
@@ -9,10 +13,20 @@ import "dotenv/config.js"
 const app = express()
 const port = 3000
 
-app.use(json())
+
+app.use(express.json())
 app.use(morgan('combined'))
 app.use(cors())
 
+// app.use('/users' , userRouter)
+
+// mongoose.connect(mongodburi)
+// .then(()=>{
+//   app.listen(port, () => {
+//     console.log(`Server listening on port http://localhost:${port}`)
+//   })
+// })
+// .catch(err => console.error(err))
 
 
 
